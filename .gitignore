@@ -298,3 +298,6 @@ __pycache__/
 *.odx.cs
 *.xsd.cs
 *.nuspec
+
+#Include everything in local packages
+!LocalPackages/**
