@@ -1,26 +1,26 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
   </PropertyGroup>
-    
   <PropertyGroup>
-    <PackageId>Broker.Binance.Net</PackageId>
-	<Authors>JKorf</Authors>
-    <PackageVersion>4.0.17</PackageVersion>
-	<Description>Binance.Net is a .Net wrapper for the Binance API. It includes all features the API provides, REST API and Websocket, using clear and readable objects including but not limited to Reading market info, Placing and managing orders and Reading balances and funds</Description>
+    <PackageId>Binance.Net</PackageId>
+    <Authors>JKorf</Authors>
+    <PackageVersion>4.1.2.1</PackageVersion>
+    <Description>Binance.Net is a .Net wrapper for the Binance API. It includes all features the API provides, REST API and Websocket, using clear and readable objects including but not limited to Reading market info, Placing and managing orders and Reading balances and funds</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageTags>Binance Binance.Net C# .Net CryptoCurrency Exchange API wrapper</PackageTags>
     <PackageProjectUrl>https://github.com/JKorf/Binance.Net</PackageProjectUrl>
-	<PackageIconUrl>https://raw.githubusercontent.com/JKorf/Binance.Net/master/Resources/binance-coin.png</PackageIconUrl>
-	<PackageLicenseUrl>https://github.com/JKorf/Binance.Net/blob/master/LICENSE</PackageLicenseUrl>
-	<NeutralLanguage>en</NeutralLanguage>
-	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-	<PackageReleaseNotes>4.0.17 - BinanceSymbolOrderBook updated, added TimestampOffset option</PackageReleaseNotes>
+    <PackageIconUrl>https://raw.githubusercontent.com/JKorf/Binance.Net/master/Resources/binance-coin.png</PackageIconUrl>
+    <PackageLicenseUrl>https://github.com/JKorf/Binance.Net/blob/master/LICENSE</PackageLicenseUrl>
+    <NeutralLanguage>en</NeutralLanguage>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageReleaseNotes>4.1.2 - Updated CryptoExchange.Net</PackageReleaseNotes>
   </PropertyGroup>
-
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
+    <DocumentationFile>Binance.Net.xml</DocumentationFile>
+  </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Broker.CryptoExchange.Net" Version="2.1.5.2" />
+    <PackageReference Include="CryptoExchange.Net" Version="2.1.7.1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
   </ItemGroup>
 </Project>
