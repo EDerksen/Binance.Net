@@ -140,6 +140,15 @@ When no longer listening to private endpoints the `client.StopUserStream` method
 
 
 ## Release notes
+* Version 4.1.2 - 07 Aug 2019
+    * Updated CryptoExchange.Net
+
+* Version 4.1.1 - 05 Aug 2019
+    * Added xml file for code docs
+
+* Version 4.1.0 - 30 Jul 2019
+    * Added margin API
+
 * Version 4.0.17 - 09 jun 2019
 	* Added TimestampOffset options
 	* Update BinanceSymbolOrderBook
