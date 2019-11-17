@@ -1,4 +1,4 @@
-# ![Icon](https://github.com/JKorf/Binance.Net/blob/master/Resources/binance-coin.png?raw=true) Binance.Net 
+# ![Icon](https://github.com/JKorf/Binance.Net/blob/master/Binance.Net/Icon/icon.png?raw=true) Binance.Net 
 
 ![Build status](https://travis-ci.org/JKorf/Binance.Net.svg?branch=master)
 
@@ -12,25 +12,29 @@ Implementation is build upon the CryptoExchange.Net library, make sure to also c
 Other CryptoExchange.Net implementations:
 <table>
 <tr>
-<td><a href="https://github.com/JKorf/Bittrex.Net"><img src="https://github.com/JKorf/Bittrex.Net/blob/master/Resources/icon.png?raw=true"></a>
+<td><a href="https://github.com/JKorf/Bittrex.Net"><img src="https://github.com/JKorf/Bittrex.Net/blob/master/Bittrex.Net/Icon/icon.png?raw=true"></a>
 <br />
 <a href="https://github.com/JKorf/Bittrex.Net">Bittrex</a>
 </td>
-<td><a href="https://github.com/JKorf/Bitfinex.Net"><img src="https://github.com/JKorf/Bitfinex.Net/blob/master/Resources/icon.png?raw=true"></a>
+<td><a href="https://github.com/JKorf/Bitfinex.Net"><img src="https://github.com/JKorf/Bitfinex.Net/blob/master/Bitfinex.Net/Icon/icon.png?raw=true"></a>
 <br />
 <a href="https://github.com/JKorf/Bitfinex.Net">Bitfinex</a>
 </td>
-<td><a href="https://github.com/JKorf/CoinEx.Net"><img src="https://github.com/JKorf/CoinEx.Net/blob/master/Resources/icon.png?raw=true"></a>
+<td><a href="https://github.com/JKorf/CoinEx.Net"><img src="https://github.com/JKorf/CoinEx.Net/blob/master/CoinEx.Net/Icon/icon.png?raw=true"></a>
 <br />
 <a href="https://github.com/JKorf/CoinEx.Net">CoinEx</a>
 </td>
-<td><a href="https://github.com/JKorf/Huobi.Net"><img src="https://github.com/JKorf/Huobi.Net/blob/master/Resources/icon.png?raw=true"></a>
+<td><a href="https://github.com/JKorf/Huobi.Net"><img src="https://github.com/JKorf/Huobi.Net/blob/master/Huobi.Net/Icon/icon.png?raw=true"></a>
 <br />
 <a href="https://github.com/JKorf/Huobi.Net">Huobi</a>
 </td>
-<td><a href="https://github.com/JKorf/Kucoin.Net"><img src="https://github.com/JKorf/Kucoin.Net/blob/master/Resources/icon.png?raw=true"></a>
+<td><a href="https://github.com/JKorf/Kucoin.Net"><img src="https://github.com/JKorf/Kucoin.Net/blob/master/Kucoin.Net/Icon/icon.png?raw=true"></a>
 <br />
 <a href="https://github.com/JKorf/Kucoin.Net">Kucoin</a>
+</td>
+<td><a href="https://github.com/JKorf/Kraken.Net"><img src="https://github.com/JKorf/Kraken.Net/blob/master/Kraken.Net/Icon/icon.png?raw=true"></a>
+<br />
+<a href="https://github.com/JKorf/Kraken.Net">Kraken</a>
 </td>
 </tr>
 </table>
@@ -78,6 +82,11 @@ Binance.Net provides two clients to interact with the Binance API. The  `Binance
 
 ## Examples
 Examples can be found in the Examples folder.
+
+## Timestamping
+Requests made to Binance are checked for a correct timestamp. When requests are send a timestamp is added to the message. When Binance processes the message the timestamp is checked to be > the current time and < the current time + 5000ms (default). If the timestamp is outside these limits the following errors will be returned:
+`timestamps 1000ms ahead of server time` or `Timestamp for this request is outside of the recvWindow`
+The recvWindow is default 5000ms and can be changed using the `ReceiveWindow` configuration option. All times are communicated in UTC so there won't be any timezone issues. However, because of clock drifting it can be that the client UTC time is not the same as the server UTC time. It is therefor recommended clients use the `SP TimeSync` program to resync the client UTC time more often than windows does by default (every 10 minutes or less is recommended).
 
 ## Websockets
 The Binance.Net socket client provides several socket endpoint to which can be subscribed.
@@ -135,6 +144,70 @@ When no longer listening to private endpoints the `client.StopUserStream` method
 
 
 ## Release notes
+* Version 5.0.3 - 13 Nov 2019
+    * Updated for new API version
+    * Added QuoteOrderQuantity parameter/property
+    * Add stream balance update
+    * Added precisions to ExchangeInfo symbols
+
+* Version 5.0.1 - 23 Oct 2019
+	* Fixed validation for 9 length symbols
+	
+* Version 5.0.1 - 23 Oct 2019
+	* Fixed validation for 5 length symbols
+
+* Version 5.0.0 - 23 Oct 2019
+	* See CryptoExchange.Net 3.0 release notes
+	* Added input validation
+	* Added CancellationToken support to all requests
+	* Now using IEnumerable<> for collections
+	* Renamed various methods to be more in line with other exchanges
+	* Renamed SubscribeToXXXStream to SubscribeToXXXUpdates
+
+* Version 4.3.3 - 06 Oct 2019
+    * Added serialization method for BinanceSymbolFilter
+
+* Version 4.3.2 - 25 Sep 2019
+    * Added missing AddressTag and TransactionFee properties in withdrawal object
+
+* Version 4.3.1 - 03 Sep 2019
+    * Added book ticker stream to socket client
+
+* Version 4.3.0 - 02 Sep 2019
+    * Added new Margin endpoints
+    * Renamed Query- methods to Get- methods for consistency
+
+* Version 4.2.3 - 29 Aug 2019
+    * Added DustTransfer and GetDividendRecords endpoints
+    * Added updateInterval parameter to depth streams
+
+* Version 4.2.2 - 20 Aug 2019
+    * Added missing margin endpoints
+    * IndicatorType to enum
+
+* Version 4.2.1 - 19 Aug 2019
+    * Added current average price endpoint
+
+* Version 4.2.0 - 15 Aug 2019
+    * Implemented OCO orders
+    * Adjustments for API update
+
+* Version 4.1.3 - 12 Aug 2019
+    * Fix margin order cancel
+
+* Version 4.1.2 - 07 Aug 2019
+    * Updated CryptoExchange.Net
+
+* Version 4.1.1 - 05 Aug 2019
+    * Added xml file for code docs
+
+* Version 4.1.0 - 30 Jul 2019
+    * Added margin API
+
+* Version 4.0.17 - 09 jun 2019
+	* Added TimestampOffset options
+	* Update BinanceSymbolOrderBook
+
 * Version 4.0.16 - 20 may 2019
 	* Fixed AutoComply trade rules behavior
 

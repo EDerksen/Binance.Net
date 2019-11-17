@@ -3,7 +3,10 @@ using CryptoExchange.Net.Objects;
 
 namespace Binance.Net.Objects
 {
-    public class BinanceClientOptions : ClientOptions
+    /// <summary>
+    /// Options for the binance client
+    /// </summary>
+    public class BinanceClientOptions : RestClientOptions
     {
         /// <summary>
         /// Whether or not to automatically sync the local time with the server time
@@ -14,6 +17,11 @@ namespace Binance.Net.Objects
         /// Interval for refreshing the auto timestamp calculation
         /// </summary>
         public TimeSpan AutoTimestampRecalculationInterval { get; set; } = TimeSpan.FromHours(3);
+
+        /// <summary>
+        /// A manual offset for the timestamp. Should only be used if AutoTimestamp and regular time synchronization on the OS is not reliable enough
+        /// </summary>
+        public TimeSpan TimestampOffset { get; set; } = TimeSpan.Zero;
 
         /// <summary>
         /// Whether to check the trade rules when placing new orders and what to do if the trade isn't valid
@@ -29,16 +37,23 @@ namespace Binance.Net.Objects
         /// </summary>
         public TimeSpan ReceiveWindow { get; set; } = TimeSpan.FromSeconds(5);
 
-        public BinanceClientOptions()
+        /// <summary>
+        /// ctor
+        /// </summary>
+        public BinanceClientOptions(): base("https://api.binance.com")
         {
-            BaseAddress = "https://api.binance.com";
         }
 
+        /// <summary>
+        /// Return a copy of these options
+        /// </summary>
+        /// <returns></returns>
         public BinanceClientOptions Copy()
         {
             var copy = Copy<BinanceClientOptions>();
             copy.AutoTimestamp = AutoTimestamp;
             copy.AutoTimestampRecalculationInterval = AutoTimestampRecalculationInterval;
+            copy.TimestampOffset = TimestampOffset;
             copy.TradeRulesBehaviour = TradeRulesBehaviour;
             copy.TradeRulesUpdateInterval = TradeRulesUpdateInterval;
             copy.ReceiveWindow = ReceiveWindow;
@@ -46,6 +61,9 @@ namespace Binance.Net.Objects
         }
     }
 
+    /// <summary>
+    /// Binance socket client options
+    /// </summary>
     public class BinanceSocketClientOptions : SocketClientOptions
     {
         /// <summary>
@@ -68,17 +86,49 @@ namespace Binance.Net.Objects
             }
         }
 
-        public BinanceSocketClientOptions()
+        /// <summary>
+        /// ctor
+        /// </summary>
+        public BinanceSocketClientOptions(): base("wss://stream.binance.com:9443/ws/")
         {
-            BaseAddress = "wss://stream.binance.com:9443/ws/";
         }        
 
+        /// <summary>
+        /// Return a copy of these options
+        /// </summary>
+        /// <returns></returns>
         public BinanceSocketClientOptions Copy()
         {
             var copy = Copy<BinanceSocketClientOptions>();
             copy.BaseSocketCombinedAddress = BaseSocketCombinedAddress;
             return copy;
         }
+    }
 
+    /// <summary>
+    /// Binance symbol order book options
+    /// </summary>
+    public class BinanceOrderBookOptions : OrderBookOptions
+    {
+        /// <summary>
+        /// The top amount of results to keep in sync. If for example limit=10 is used, the order book will contain the 10 best bids and 10 best asks. Leaving this null will sync the full order book
+        /// </summary>
+        public int? Limit { get; }
+
+        /// <summary>
+        /// Update interval in milliseconds, either 100 or 1000. Defaults to 1000
+        /// </summary>
+        public int? UpdateInterval { get; }
+
+        /// <summary>
+        /// Create new options
+        /// </summary>
+        /// <param name="limit">The top amount of results to keep in sync. If for example limit=10 is used, the order book will contain the 10 best bids and 10 best asks. Leaving this null will sync the full order book</param>
+        /// <param name="updateInterval">Update interval in milliseconds, either 100 or 1000. Defaults to 1000</param>
+        public BinanceOrderBookOptions(int? limit = null, int? updateInterval = null): base("Binance", limit == null)
+        {
+            Limit = limit;
+            UpdateInterval = updateInterval;
+        }
     }
 }
