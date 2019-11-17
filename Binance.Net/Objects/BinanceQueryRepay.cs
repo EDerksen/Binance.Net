@@ -5,12 +5,15 @@ using System;
 
 namespace Binance.Net.Objects
 {
-    public class BinanceQueryRepay
+    /// <summary>
+    /// Repay info
+    /// </summary>
+    public class BinanceRepay
     {
         /// <summary>
         /// The asset of the repay
         /// </summary>
-        public string Asset { get; set; }
+        public string Asset { get; set; } = "";
         /// <summary>
         /// The transaction id of the repay
         /// </summary>`

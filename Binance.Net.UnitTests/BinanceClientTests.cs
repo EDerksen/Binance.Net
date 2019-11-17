@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using CryptoExchange.Net.Objects;
 
 namespace Binance.Net.UnitTests
 {
@@ -78,6 +80,7 @@ namespace Binance.Net.UnitTests
             var orderBook = new BinanceOrderBook()
             {
                 LastUpdateId = 123,
+                Symbol = "BNBBTC",
                 Asks = new List<BinanceOrderBookEntry>()
                 {
                     new BinanceOrderBookEntry()
@@ -112,11 +115,11 @@ namespace Binance.Net.UnitTests
 
             // assert
             Assert.IsTrue(result.Success);
-            Assert.IsTrue(TestHelpers.AreEqual(orderBook, result.Data, "Asks", "Bids", "AsksStream", "BidsStream"));
-            Assert.IsTrue(TestHelpers.AreEqual(orderBook.Asks[0], result.Data.Asks[0]));
-            Assert.IsTrue(TestHelpers.AreEqual(orderBook.Asks[1], result.Data.Asks[1]));
-            Assert.IsTrue(TestHelpers.AreEqual(orderBook.Bids[0], result.Data.Bids[0]));
-            Assert.IsTrue(TestHelpers.AreEqual(orderBook.Bids[1], result.Data.Bids[1]));
+            Assert.IsTrue(TestHelpers.AreEqual(orderBook, result.Data, "Asks", "Bids", "AsksStream", "BidsStream", "LastUpdateIdStream"));
+            Assert.IsTrue(TestHelpers.AreEqual(orderBook.Asks.ToList()[0], result.Data.Asks.ToList()[0]));
+            Assert.IsTrue(TestHelpers.AreEqual(orderBook.Asks.ToList()[1], result.Data.Asks.ToList()[1]));
+            Assert.IsTrue(TestHelpers.AreEqual(orderBook.Bids.ToList()[0], result.Data.Bids.ToList()[0]));
+            Assert.IsTrue(TestHelpers.AreEqual(orderBook.Bids.ToList()[1], result.Data.Bids.ToList()[1]));
         }
 
         [TestCase]
@@ -161,8 +164,8 @@ namespace Binance.Net.UnitTests
             // assert
             Assert.IsTrue(result.Success);
             Assert.IsTrue(TestHelpers.AreEqual(accountInfo, result.Data, "Balances"));
-            Assert.IsTrue(TestHelpers.AreEqual(accountInfo.Balances[0], result.Data.Balances[0]));
-            Assert.IsTrue(TestHelpers.AreEqual(accountInfo.Balances[1], result.Data.Balances[1]));
+            Assert.IsTrue(TestHelpers.AreEqual(accountInfo.Balances.ToList()[0], result.Data.Balances.ToList()[0]));
+            Assert.IsTrue(TestHelpers.AreEqual(accountInfo.Balances.ToList()[1], result.Data.Balances.ToList()[1]));
         }
 
         [TestCase]
@@ -202,9 +205,10 @@ namespace Binance.Net.UnitTests
 
             // assert
             Assert.IsTrue(result.Success);
-            Assert.AreEqual(trades.Length, result.Data.Length);
-            Assert.IsTrue(TestHelpers.AreEqual(trades[0], result.Data[0]));
-            Assert.IsTrue(TestHelpers.AreEqual(trades[1], result.Data[1]));
+            var resultData = result.Data.ToList();
+            Assert.AreEqual(trades.Length, resultData.Count);
+            Assert.IsTrue(TestHelpers.AreEqual(trades[0], resultData[0]));
+            Assert.IsTrue(TestHelpers.AreEqual(trades[1], resultData[1]));
         }
 
         [TestCase]
@@ -237,10 +241,11 @@ namespace Binance.Net.UnitTests
             var result = client.GetAllBookPrices();
 
             // assert
+            var data = result.Data.ToList();
             Assert.IsTrue(result.Success);
-            Assert.AreEqual(prices.Length, result.Data.Length);
-            Assert.IsTrue(TestHelpers.AreEqual(prices[0], result.Data[0]));
-            Assert.IsTrue(TestHelpers.AreEqual(prices[1], result.Data[1]));
+            Assert.AreEqual(prices.Length, data.Count);
+            Assert.IsTrue(TestHelpers.AreEqual(prices[0], data[0]));
+            Assert.IsTrue(TestHelpers.AreEqual(prices[1], data[1]));
         }
 
         [TestCase]
@@ -294,9 +299,9 @@ namespace Binance.Net.UnitTests
 
             // assert
             Assert.IsTrue(result.Success);
-            Assert.AreEqual(orders.Length, result.Data.Length);
-            Assert.IsTrue(TestHelpers.AreEqual(orders[0], result.Data[0]));
-            Assert.IsTrue(TestHelpers.AreEqual(orders[1], result.Data[1]));
+            Assert.AreEqual(orders.Length, result.Data.Count());
+            Assert.IsTrue(TestHelpers.AreEqual(orders[0], result.Data.ToList()[0]));
+            Assert.IsTrue(TestHelpers.AreEqual(orders[1], result.Data.ToList()[1]));
         }
 
         [TestCase]
@@ -324,9 +329,9 @@ namespace Binance.Net.UnitTests
 
             // assert
             Assert.IsTrue(result.Success);
-            Assert.AreEqual(result.Data.Length, prices.Length);
-            Assert.IsTrue(TestHelpers.AreEqual(prices[0], result.Data[0]));
-            Assert.IsTrue(TestHelpers.AreEqual(prices[1], result.Data[1]));
+            Assert.AreEqual(result.Data.Count(), prices.Length);
+            Assert.IsTrue(TestHelpers.AreEqual(prices[0], result.Data.ToList()[0]));
+            Assert.IsTrue(TestHelpers.AreEqual(prices[1], result.Data.ToList()[1]));
         }
 
         [TestCase]
@@ -366,10 +371,9 @@ namespace Binance.Net.UnitTests
 
             // assert
             Assert.IsTrue(result.Success);
-            Assert.IsTrue(result.Data.Success);
-            Assert.AreEqual(result.Data.List.Count, history.List.Count);
-            Assert.IsTrue(TestHelpers.AreEqual(history.List[0], result.Data.List[0]));
-            Assert.IsTrue(TestHelpers.AreEqual(history.List[1], result.Data.List[1]));
+            Assert.AreEqual(result.Data.Count(), history.List.Count());
+            Assert.IsTrue(TestHelpers.AreEqual(history.List.ToList()[0], result.Data.ToList()[0]));
+            Assert.IsTrue(TestHelpers.AreEqual(history.List.ToList()[1], result.Data.ToList()[1]));
         }
 
         [TestCase]
@@ -423,9 +427,9 @@ namespace Binance.Net.UnitTests
 
             // assert
             Assert.IsTrue(result.Success);
-            Assert.AreEqual(result.Data.Length, klines.Length);
-            Assert.IsTrue(TestHelpers.AreEqual(klines[0], result.Data[0]));
-            Assert.IsTrue(TestHelpers.AreEqual(klines[1], result.Data[1]));
+            Assert.AreEqual(result.Data.Count(), klines.Length);
+            Assert.IsTrue(TestHelpers.AreEqual(klines[0], result.Data.ToList()[0]));
+            Assert.IsTrue(TestHelpers.AreEqual(klines[1], result.Data.ToList()[1]));
         }
 
         [TestCase]
@@ -473,9 +477,9 @@ namespace Binance.Net.UnitTests
 
             // assert
             Assert.IsTrue(result.Success);
-            Assert.AreEqual(result.Data.Length, trades.Length);
-            Assert.IsTrue(TestHelpers.AreEqual(trades[0], result.Data[0]));
-            Assert.IsTrue(TestHelpers.AreEqual(trades[1], result.Data[1]));
+            Assert.AreEqual(result.Data.Count(), trades.Length);
+            Assert.IsTrue(TestHelpers.AreEqual(trades[0], result.Data.ToList()[0]));
+            Assert.IsTrue(TestHelpers.AreEqual(trades[1], result.Data.ToList()[1]));
         }
 
         [TestCase]
@@ -529,9 +533,9 @@ namespace Binance.Net.UnitTests
 
             // assert
             Assert.IsTrue(result.Success);
-            Assert.AreEqual(orders.Length, result.Data.Length);
-            Assert.IsTrue(TestHelpers.AreEqual(orders[0], result.Data[0]));
-            Assert.IsTrue(TestHelpers.AreEqual(orders[1], result.Data[1]));
+            Assert.AreEqual(orders.Length, result.Data.Count());
+            Assert.IsTrue(TestHelpers.AreEqual(orders[0], result.Data.ToList()[0]));
+            Assert.IsTrue(TestHelpers.AreEqual(orders[1], result.Data.ToList()[1]));
         }
 
         [TestCase]
@@ -572,14 +576,13 @@ namespace Binance.Net.UnitTests
             });
 
             // act
-            var result = client.GetWithdrawHistory();
+            var result = client.GetWithdrawalHistory();
 
             // assert
             Assert.IsTrue(result.Success);
-            Assert.IsTrue(result.Data.Success);
-            Assert.AreEqual(result.Data.List.Count, history.List.Count);
-            Assert.IsTrue(TestHelpers.AreEqual(history.List[0], result.Data.List[0]));
-            Assert.IsTrue(TestHelpers.AreEqual(history.List[1], result.Data.List[1]));
+            Assert.AreEqual(result.Data.Count(), history.List.Count());
+            Assert.IsTrue(TestHelpers.AreEqual(history.List.ToList()[0], result.Data.ToList()[0]));
+            Assert.IsTrue(TestHelpers.AreEqual(history.List.ToList()[1], result.Data.ToList()[1]));
         }
 
         [TestCase]
@@ -688,7 +691,7 @@ namespace Binance.Net.UnitTests
             });
 
             // act
-            var result = client.QueryOrder("BNBBTC", orderId: 1);
+            var result = client.GetOrder("BNBBTC", orderId: 1);
 
             // assert
             Assert.IsTrue(result.Success);
@@ -737,7 +740,7 @@ namespace Binance.Net.UnitTests
                         { "GCR", 100 },
                         { "IFER", 150 }
                     },
-                    Indicators = new Dictionary<string, List<BinanceIndicator>>()
+                    Indicators = new Dictionary<string, IEnumerable<BinanceIndicator>>()
                     {
                         { "BTCUSDT", new List<BinanceIndicator>
                             {
@@ -745,7 +748,7 @@ namespace Binance.Net.UnitTests
                                 {
                                     Count = 1,
                                     CurrentValue = 0.5m,
-                                    Indicator = "UFR",
+                                    IndicatorType = IndicatorType.CancellationRatio,
                                     TriggerValue = 0.95m
                                 }
                             }
@@ -768,7 +771,7 @@ namespace Binance.Net.UnitTests
             Assert.IsTrue(TestHelpers.AreEqual(status.Status, result.Data, "Indicators", "TriggerConditions"));
             Assert.IsTrue(status.Status.TriggerConditions["GCR"] == result.Data.TriggerConditions["GCR"]);
             Assert.IsTrue(status.Status.TriggerConditions["IFER"] == result.Data.TriggerConditions["IFER"]);
-            Assert.IsTrue(TestHelpers.AreEqual(status.Status.Indicators["BTCUSDT"][0], result.Data.Indicators["BTCUSDT"][0]));
+            Assert.IsTrue(TestHelpers.AreEqual(status.Status.Indicators["BTCUSDT"].First(), result.Data.Indicators["BTCUSDT"].First()));
         }
 
         [TestCase]
@@ -839,10 +842,18 @@ namespace Binance.Net.UnitTests
             });
 
             // act
-            client.GetOpenOrders();
+            try
+            {
+                client.GetOpenOrders();
+            }
+            catch (Exception)
+            {
+                // Exception is thrown because stream is being read twice, doesn't happen normally
+            }
+
 
             // assert
-            Mock.Get(client.RequestFactory).Verify(f => f.Create(It.Is<string>((msg) => msg.Contains("/time"))), Times.Exactly(2));
+            Mock.Get(client.RequestFactory).Verify(f => f.Create(It.IsAny<HttpMethod>(), It.Is<string>((msg) => msg.Contains("/time"))), Times.Exactly(2));
         }
 
         [TestCase()]
@@ -867,7 +878,7 @@ namespace Binance.Net.UnitTests
         {
             // arrange
             // act
-            var authProvider = new BinanceAuthenticationProvider(new ApiCredentials("TestKey", "TestSecret"));
+            var authProvider = new BinanceAuthenticationProvider(new ApiCredentials("TestKey", "TestSecret"), ArrayParametersSerialization.MultipleValues);
 
             // assert
             Assert.AreEqual(authProvider.Credentials.Key.GetString(), "TestKey");
@@ -879,11 +890,11 @@ namespace Binance.Net.UnitTests
         public void AddingAuthToUriString_Should_GiveCorrectSignature(string parameters, string signature)
         {
             // arrange
-            var authProvider = new BinanceAuthenticationProvider(new ApiCredentials("TestKey", "TestSecret"));
+            var authProvider = new BinanceAuthenticationProvider(new ApiCredentials("TestKey", "TestSecret"), ArrayParametersSerialization.MultipleValues);
             string uri = $"https://test.test-api.com{parameters}";
 
             // act
-            var sign = authProvider.AddAuthenticationToParameters(uri, "POST", new Dictionary<string, object>(), true);
+            var sign = authProvider.AddAuthenticationToParameters(uri, HttpMethod.Post, new Dictionary<string, object>(), true);
 
             // assert
             Assert.IsTrue((string)sign.Last().Value == signature);
@@ -893,11 +904,12 @@ namespace Binance.Net.UnitTests
         public void AddingAuthToRequest_Should_AddApiKeyHeader()
         {
             // arrange
-            var authProvider = new BinanceAuthenticationProvider(new ApiCredentials("TestKey", "TestSecret"));
-            var request = new Request(WebRequest.CreateHttp("https://test.test-api.com"));
+            var authProvider = new BinanceAuthenticationProvider(new ApiCredentials("TestKey", "TestSecret"), ArrayParametersSerialization.MultipleValues);
+            var client = new HttpClient();
+            var request = new Request(new HttpRequestMessage(HttpMethod.Get, "https://test.test-api.com"), client);
 
             // act
-            var sign = authProvider.AddAuthenticationToHeaders(request.Uri.ToString(), "GET", new Dictionary<string, object>(), true);
+            var sign = authProvider.AddAuthenticationToHeaders(request.Uri.ToString(), HttpMethod.Get, new Dictionary<string, object>(), true);
 
             // assert
             Assert.IsTrue(sign.First().Key == "X-MBX-APIKEY" && sign.First().Value == "TestKey");
@@ -1022,6 +1034,24 @@ namespace Binance.Net.UnitTests
             // assert
             Assert.IsTrue(result.Success);
             Assert.IsTrue(TestHelpers.AreEqual(canceled, result.Data));
+        }
+
+        [TestCase("BTCUSDT", true)]
+        [TestCase("NANOUSDT", true)]
+        [TestCase("NANOAUSDTA", true)]
+        [TestCase("NANOAUSDTAD", false)]
+        [TestCase("NANOBTC", true)]
+        [TestCase("ETHBTC", true)]
+        [TestCase("BEETC", true)]
+        [TestCase("EETC", false)]
+        [TestCase("BTC-USDT", false)]
+        [TestCase("BTC-USD", false)]
+        public void CheckValidBinanceSymbol(string symbol, bool isValid)
+        {
+            if (isValid)
+                Assert.DoesNotThrow(symbol.ValidateBinanceSymbol);
+            else
+                Assert.Throws(typeof(ArgumentException), symbol.ValidateBinanceSymbol);
         }
     }
 }

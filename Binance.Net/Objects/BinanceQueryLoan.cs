@@ -5,12 +5,15 @@ using System;
 
 namespace Binance.Net.Objects
 {
-    public class BinanceQueryLoan
+    /// <summary>
+    /// Loan info
+    /// </summary>
+    public class BinanceLoan
     {
         /// <summary>
         /// The asset of the loan
         /// </summary>
-        public string Asset { get; set; }
+        public string Asset { get; set; } = "";
         /// <summary>
         /// Principal repaid 
         /// </summary>
