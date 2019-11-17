@@ -1,31 +1,35 @@
 ﻿using System;
+using System.Collections.Generic;
 using CryptoExchange.Net.Converters;
 using Newtonsoft.Json;
 
 namespace Binance.Net.Objects
 {
-    public class BinanceSubAccountTransferWrapper
+    internal class BinanceSubAccountTransferWrapper
     {
         [JsonProperty("msg")]
-        public string Message { get; set; }
+        public string? Message { get; set; }
         public bool Success { get; set; }
-        public BinanceSubAccountTransfer[] Transfers { get; set; }
+        public IEnumerable<BinanceSubAccountTransfer>? Transfers { get; set; }
     }
 
+    /// <summary>
+    /// Sub account transfer info
+    /// </summary>
     public class BinanceSubAccountTransfer
     {
         /// <summary>
         /// From which email the transfer originated
         /// </summary>
-        public string From { get; set; }
+        public string From { get; set; } = "";
         /// <summary>
         /// To which email the transfer was to
         /// </summary>
-        public string To { get; set; }
+        public string To { get; set; } = "";
         /// <summary>
         /// The asset of the transfer
         /// </summary>
-        public string Asset { get; set; }
+        public string Asset { get; set; } = "";
         /// <summary>
         /// The quantity of the transfer
         /// </summary>

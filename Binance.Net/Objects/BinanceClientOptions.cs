@@ -3,6 +3,9 @@ using CryptoExchange.Net.Objects;
 
 namespace Binance.Net.Objects
 {
+    /// <summary>
+    /// Options for the binance client
+    /// </summary>
     public class BinanceClientOptions : RestClientOptions
     {
         /// <summary>
@@ -34,11 +37,17 @@ namespace Binance.Net.Objects
         /// </summary>
         public TimeSpan ReceiveWindow { get; set; } = TimeSpan.FromSeconds(5);
 
-        public BinanceClientOptions()
+        /// <summary>
+        /// ctor
+        /// </summary>
+        public BinanceClientOptions(): base("https://api.binance.com")
         {
-            BaseAddress = "https://api.binance.com";
         }
 
+        /// <summary>
+        /// Return a copy of these options
+        /// </summary>
+        /// <returns></returns>
         public BinanceClientOptions Copy()
         {
             var copy = Copy<BinanceClientOptions>();
@@ -52,6 +61,9 @@ namespace Binance.Net.Objects
         }
     }
 
+    /// <summary>
+    /// Binance socket client options
+    /// </summary>
     public class BinanceSocketClientOptions : SocketClientOptions
     {
         /// <summary>
@@ -74,11 +86,17 @@ namespace Binance.Net.Objects
             }
         }
 
-        public BinanceSocketClientOptions()
+        /// <summary>
+        /// ctor
+        /// </summary>
+        public BinanceSocketClientOptions(): base("wss://stream.binance.com:9443/ws/")
         {
-            BaseAddress = "wss://stream.binance.com:9443/ws/";
         }        
 
+        /// <summary>
+        /// Return a copy of these options
+        /// </summary>
+        /// <returns></returns>
         public BinanceSocketClientOptions Copy()
         {
             var copy = Copy<BinanceSocketClientOptions>();
@@ -87,6 +105,9 @@ namespace Binance.Net.Objects
         }
     }
 
+    /// <summary>
+    /// Binance symbol order book options
+    /// </summary>
     public class BinanceOrderBookOptions : OrderBookOptions
     {
         /// <summary>
@@ -95,12 +116,19 @@ namespace Binance.Net.Objects
         public int? Limit { get; }
 
         /// <summary>
+        /// Update interval in milliseconds, either 100 or 1000. Defaults to 1000
+        /// </summary>
+        public int? UpdateInterval { get; }
+
+        /// <summary>
         /// Create new options
         /// </summary>
         /// <param name="limit">The top amount of results to keep in sync. If for example limit=10 is used, the order book will contain the 10 best bids and 10 best asks. Leaving this null will sync the full order book</param>
-        public BinanceOrderBookOptions(int? limit = null): base("Binance", limit == null)
+        /// <param name="updateInterval">Update interval in milliseconds, either 100 or 1000. Defaults to 1000</param>
+        public BinanceOrderBookOptions(int? limit = null, int? updateInterval = null): base("Binance", limit == null)
         {
             Limit = limit;
+            UpdateInterval = updateInterval;
         }
     }
 }

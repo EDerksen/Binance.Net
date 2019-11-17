@@ -1,4 +1,4 @@
-# ![Icon](https://github.com/JKorf/Binance.Net/blob/master/Resources/binance-coin.png?raw=true) Binance.Net 
+# ![Icon](https://github.com/JKorf/Binance.Net/blob/master/Binance.Net/Icon/icon.png?raw=true) Binance.Net 
 
 ![Build status](https://travis-ci.org/JKorf/Binance.Net.svg?branch=master)
 
@@ -12,25 +12,29 @@ Implementation is build upon the CryptoExchange.Net library, make sure to also c
 Other CryptoExchange.Net implementations:
 <table>
 <tr>
-<td><a href="https://github.com/JKorf/Bittrex.Net"><img src="https://github.com/JKorf/Bittrex.Net/blob/master/Resources/icon.png?raw=true"></a>
+<td><a href="https://github.com/JKorf/Bittrex.Net"><img src="https://github.com/JKorf/Bittrex.Net/blob/master/Bittrex.Net/Icon/icon.png?raw=true"></a>
 <br />
 <a href="https://github.com/JKorf/Bittrex.Net">Bittrex</a>
 </td>
-<td><a href="https://github.com/JKorf/Bitfinex.Net"><img src="https://github.com/JKorf/Bitfinex.Net/blob/master/Resources/icon.png?raw=true"></a>
+<td><a href="https://github.com/JKorf/Bitfinex.Net"><img src="https://github.com/JKorf/Bitfinex.Net/blob/master/Bitfinex.Net/Icon/icon.png?raw=true"></a>
 <br />
 <a href="https://github.com/JKorf/Bitfinex.Net">Bitfinex</a>
 </td>
-<td><a href="https://github.com/JKorf/CoinEx.Net"><img src="https://github.com/JKorf/CoinEx.Net/blob/master/Resources/icon.png?raw=true"></a>
+<td><a href="https://github.com/JKorf/CoinEx.Net"><img src="https://github.com/JKorf/CoinEx.Net/blob/master/CoinEx.Net/Icon/icon.png?raw=true"></a>
 <br />
 <a href="https://github.com/JKorf/CoinEx.Net">CoinEx</a>
 </td>
-<td><a href="https://github.com/JKorf/Huobi.Net"><img src="https://github.com/JKorf/Huobi.Net/blob/master/Resources/icon.png?raw=true"></a>
+<td><a href="https://github.com/JKorf/Huobi.Net"><img src="https://github.com/JKorf/Huobi.Net/blob/master/Huobi.Net/Icon/icon.png?raw=true"></a>
 <br />
 <a href="https://github.com/JKorf/Huobi.Net">Huobi</a>
 </td>
-<td><a href="https://github.com/JKorf/Kucoin.Net"><img src="https://github.com/JKorf/Kucoin.Net/blob/master/Resources/icon.png?raw=true"></a>
+<td><a href="https://github.com/JKorf/Kucoin.Net"><img src="https://github.com/JKorf/Kucoin.Net/blob/master/Kucoin.Net/Icon/icon.png?raw=true"></a>
 <br />
 <a href="https://github.com/JKorf/Kucoin.Net">Kucoin</a>
+</td>
+<td><a href="https://github.com/JKorf/Kraken.Net"><img src="https://github.com/JKorf/Kraken.Net/blob/master/Kraken.Net/Icon/icon.png?raw=true"></a>
+<br />
+<a href="https://github.com/JKorf/Kraken.Net">Kraken</a>
 </td>
 </tr>
 </table>
@@ -140,6 +144,57 @@ When no longer listening to private endpoints the `client.StopUserStream` method
 
 
 ## Release notes
+* Version 5.0.3 - 13 Nov 2019
+    * Updated for new API version
+    * Added QuoteOrderQuantity parameter/property
+    * Add stream balance update
+    * Added precisions to ExchangeInfo symbols
+
+* Version 5.0.1 - 23 Oct 2019
+	* Fixed validation for 9 length symbols
+	
+* Version 5.0.1 - 23 Oct 2019
+	* Fixed validation for 5 length symbols
+
+* Version 5.0.0 - 23 Oct 2019
+	* See CryptoExchange.Net 3.0 release notes
+	* Added input validation
+	* Added CancellationToken support to all requests
+	* Now using IEnumerable<> for collections
+	* Renamed various methods to be more in line with other exchanges
+	* Renamed SubscribeToXXXStream to SubscribeToXXXUpdates
+
+* Version 4.3.3 - 06 Oct 2019
+    * Added serialization method for BinanceSymbolFilter
+
+* Version 4.3.2 - 25 Sep 2019
+    * Added missing AddressTag and TransactionFee properties in withdrawal object
+
+* Version 4.3.1 - 03 Sep 2019
+    * Added book ticker stream to socket client
+
+* Version 4.3.0 - 02 Sep 2019
+    * Added new Margin endpoints
+    * Renamed Query- methods to Get- methods for consistency
+
+* Version 4.2.3 - 29 Aug 2019
+    * Added DustTransfer and GetDividendRecords endpoints
+    * Added updateInterval parameter to depth streams
+
+* Version 4.2.2 - 20 Aug 2019
+    * Added missing margin endpoints
+    * IndicatorType to enum
+
+* Version 4.2.1 - 19 Aug 2019
+    * Added current average price endpoint
+
+* Version 4.2.0 - 15 Aug 2019
+    * Implemented OCO orders
+    * Adjustments for API update
+
+* Version 4.1.3 - 12 Aug 2019
+    * Fix margin order cancel
+
 * Version 4.1.2 - 07 Aug 2019
     * Updated CryptoExchange.Net
 

@@ -1,24 +1,28 @@
 ﻿using System;
+using System.Collections.Generic;
 using Binance.Net.Converters;
 using CryptoExchange.Net.Converters;
 using Newtonsoft.Json;
 
 namespace Binance.Net.Objects
 {
-    public class BinanceSubAccountWrapper
+    internal class BinanceSubAccountWrapper
     {
         [JsonProperty("msg")]
-        public string Message { get; set; }
+        public string? Message { get; set; }
         public bool Success { get; set; }
-        public BinanceSubAccount[] SubAccounts { get; set; }
+        public IEnumerable<BinanceSubAccount>? SubAccounts { get; set; }
     }
 
+    /// <summary>
+    /// Sub account details
+    /// </summary>
     public class BinanceSubAccount
     {
         /// <summary>
         /// The email associated with the sub account
         /// </summary>
-        public string Email { get; set; }
+        public string Email { get; set; } = "";
         /// <summary>
         /// The status of the sub account
         /// </summary>
@@ -31,7 +35,7 @@ namespace Binance.Net.Objects
         /// <summary>
         /// The mobile associated with the sub account
         /// </summary>
-        public string Mobile { get; set; }
+        public string Mobile { get; set; } = "";
         /// <summary>
         /// If Google authentication is enabled
         /// </summary>
