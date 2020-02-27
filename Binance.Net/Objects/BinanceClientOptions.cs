@@ -45,6 +45,14 @@ namespace Binance.Net.Objects
         }
 
         /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="baseAddress">Сustom url to connect via mirror website</param>
+        public BinanceClientOptions(string baseAddress) : base(baseAddress)
+        {
+        }
+
+        /// <summary>
         /// Return a copy of these options
         /// </summary>
         /// <returns></returns>
@@ -84,6 +92,14 @@ namespace Binance.Net.Objects
                 if (value != 1)
                     throw new ArgumentException("Can't change SocketSubscriptionsCombineTarget; server implementation does not allow multiple subscription on a socket");
             }
+        }
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="address"></param>
+        public BinanceSocketClientOptions(string address): base(address)
+        {
         }
 
         /// <summary>
