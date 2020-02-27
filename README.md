@@ -49,6 +49,10 @@ Implementations from third parties:
 <br />
 <a href="https://github.com/ridicoulous/LiquidQuoine.Net">Liquid</a>
 </td>
+<td><a href="https://github.com/burakoner/OKEx.Net"><img src="https://raw.githubusercontent.com/burakoner/OKEx.Net/master/Okex.Net/Icon/icon.png"></a>
+<br />
+<a href="https://github.comburakoner/OKEx.Net">OKEx</a>
+</td>
 </tr>
 </table>
 
@@ -144,6 +148,18 @@ When no longer listening to private endpoints the `client.StopUserStream` method
 
 
 ## Release notes
+* Version 5.0.7 - 05 Feb 2020
+    * Fixed incorrect Invalid symbol error
+
+* Version 5.0.6 - 27 Jan 2020
+    * Updated CryptoExchange.Net
+
+* Version 5.0.5 - 23 Jan 2020
+    * Added option for custom url
+
+* Version 5.0.4 - 10 Dec 2019
+    * Fix for BinanceSymbolOrderBook
+
 * Version 5.0.3 - 13 Nov 2019
     * Updated for new API version
     * Added QuoteOrderQuantity parameter/property
