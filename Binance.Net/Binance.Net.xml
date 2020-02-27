@@ -3983,6 +3983,12 @@
             ctor
             </summary>
         </member>
+        <member name="M:Binance.Net.Objects.BinanceClientOptions.#ctor(System.String)">
+            <summary>
+            ctor
+            </summary>
+            <param name="baseAddress">Сustom url to connect via mirror website</param>
+        </member>
         <member name="M:Binance.Net.Objects.BinanceClientOptions.Copy">
             <summary>
             Return a copy of these options
@@ -4005,6 +4011,12 @@
             Setting this to a higher number increases subscription speed, but having more subscriptions on a single connection will also increase the amount of traffic on that single connection.
             Not available on Binance.
             </summary>
+        </member>
+        <member name="M:Binance.Net.Objects.BinanceSocketClientOptions.#ctor(System.String)">
+            <summary>
+            ctor
+            </summary>
+            <param name="address"></param>
         </member>
         <member name="M:Binance.Net.Objects.BinanceSocketClientOptions.#ctor">
             <summary>
